@@ -1,4 +1,7 @@
-
+/**
+Samuel C. dos Santos - 1996789
+Prog. Orientada Objetos - Prof. José
+*/
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -293,8 +296,8 @@ public class CadCar extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(
                     null,
-                    "Não existe uma carsoa com este CPF",
-                    "Erro de Excluasão",
+                    "Não existe um carro com essa placa.",
+                    "Erro de Exclusão",
                     0
             );
 

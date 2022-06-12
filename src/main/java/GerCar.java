@@ -1,4 +1,7 @@
-
+/**
+Samuel C. dos Santos - 1996789
+Prog. Orientada Objetos - Prof. José
+*/
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
