@@ -1,58 +1,62 @@
+
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class GerCar {
 
-	private Carro car;
-	private List<Carro> bdCar = new ArrayList<Carro>();
+    private Carro car;
+    private List<Carro> bdCar = new ArrayList<Carro>();
 
-	public List<Carro> getbdCar() {
-		return bdCar;
-	}
+    public List<Carro> getbdCar() {
+        return bdCar;
+    }
 
-	public Carro cadastraCarro(Carro car) {
+    public Carro cadastraCarro(Carro car) {
+        if (consultaCarro(car) == null) {
+            bdCar.add(car);
+            return car;
+        } else {
+            return null;
+        }
+    }
 
-		if (consultaCarro(car) == null) {
-			bdCar.add(car);
-			return car;
-		} else {
-			return null;
-		}
+    public Carro consultaCarro(Carro c1) {
+        for (int i = 0; i < bdCar.size(); i++) {
+            if (c1.getPlaca().equals(bdCar.get(i).getPlaca())) {
+                return bdCar.get(i);
+            }
+        }
+        return null;
+    }
 
-	}
+    public Carro excluiCarro(Carro car) {
+        car = consultaCarro(car);
+        if (car != null) {
+            bdCar.remove(car);
+            return null;
+        } else {
+            return car;
+        }
+    }
 
-	public Carro consultaCarro(Carro car) {
-		for (int i = 0; i < bdCar.size(); i++) {
-			if (this.car.getPlaca() == bdCar.get(i).getPlaca()) {
-				return bdCar.get(i);
-			}
-		}
-		return null;
-	}
+    public Carro atualizaCarro(Carro c2) {
+        for (int i = 0; i < bdCar.size(); i++) {
+            if (c2.getPlaca().equals(bdCar.get(i).getPlaca())) {
+                String nome = JOptionPane.showInputDialog(null, "Informe o novo modelo", "Atualização",
+                        JOptionPane.QUESTION_MESSAGE);
+                c2.setModelo(nome);
+                String novaMarca = JOptionPane.showInputDialog(null, "Informe a nova marca", "Atualização",
+                        JOptionPane.QUESTION_MESSAGE);
+                c2.setMarca(novaMarca);
+                String novoAno = JOptionPane.showInputDialog(null, "Informe o novo ano", "Atualização",
+                        JOptionPane.QUESTION_MESSAGE);
+                c2.setAno(Integer.parseInt(novoAno));
 
-	public Carro excluiCarro(Carro car) {
-		car = consultaCarro(car);
-		if (car != null) {
-			bdCar.remove(car);
-			return null;
-		} else {
-			return car;
-		}
-
-	}// fim excluiCarro
-
-	public Carro atualizaCarro(Carro car) {
-		for (int i = 0; i < bdCar.size(); i++) {
-			if (car.getPlaca() == bdCar.get(i).getPlaca()) {
-				String nome = JOptionPane.showInputDialog(null, "Informe o novo modelo", "Atualização",
-						JOptionPane.QUESTION_MESSAGE);
-				car.setModelo(nome);
-				bdCar.set(i, car);
-				return bdCar.get(i);
-			}
-		}
-		return null;
-	}// fim atualizaCar
-
-}// fim da classe
+                bdCar.set(i, c2);
+                return bdCar.get(i);
+            }
+        }
+        return null;
+    }
+}

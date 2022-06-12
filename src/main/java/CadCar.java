@@ -1,15 +1,15 @@
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class CadCar extends javax.swing.JFrame {
-    
-     private Carro car = new Carro();
-     private GerCar gc = new GerCar();
-   
+
+    private Carro car = new Carro();
+    private GerCar gc = new GerCar();
+
     public CadCar() {
         initComponents();
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -31,9 +31,10 @@ public class CadCar extends javax.swing.JFrame {
         btAlteraCarro = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabCar = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Pessoas");
+        setTitle("Cadastro de Veículos");
 
         rotMarca.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         rotMarca.setText("Marca:");
@@ -121,6 +122,9 @@ public class CadCar extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabCar);
 
+        jLabel1.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel1.setText("Utilize sempre a placa para realizar consultas, remoções e alterações.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,7 +163,10 @@ public class CadCar extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(rotAno)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cxAno)))))
+                                        .addComponent(cxAno))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel1)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -181,7 +188,9 @@ public class CadCar extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(rotPlaca)
                         .addComponent(cxPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCadastraCarro)
                     .addComponent(btRemoveCarro)
@@ -195,6 +204,8 @@ public class CadCar extends javax.swing.JFrame {
                     .addComponent(btSair))
                 .addGap(20, 20, 20))
         );
+
+        getAccessibleContext().setAccessibleName("Cadastro de Veículos");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -217,8 +228,8 @@ public class CadCar extends javax.swing.JFrame {
     }//GEN-LAST:event_btConsultaCarroActionPerformed
 
     private void btAlteraCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlteraCarroActionPerformed
-       alteraCarro();
-       listaTab();
+        alteraCarro();
+        listaTab();
     }//GEN-LAST:event_btAlteraCarroActionPerformed
 
     private void btExcluiCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluiCarroActionPerformed
@@ -233,166 +244,161 @@ public class CadCar extends javax.swing.JFrame {
     private void cxMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cxMarcaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cxMarcaActionPerformed
-    public void selectTabCarro(){
+    public void selectTabCarro() {
         String valLinTab = "";
         int posLin = tabCar.getSelectedRow();
-          
-        
-        for(int coluna = 0;coluna < tabCar.getColumnCount(); coluna++ ){
-            valLinTab += tabCar.getModel().getValueAt(posLin,coluna).toString();
-            
-            if(coluna+1 < tabCar.getRowCount()){
-               valLinTab += " ";
+
+        for (int coluna = 0; coluna < tabCar.getColumnCount(); coluna++) {
+            valLinTab += tabCar.getModel().getValueAt(posLin, coluna).toString();
+
+            if (coluna + 1 < tabCar.getRowCount()) {
+                valLinTab += " | ";
             }
-            
+
         }
         JOptionPane.showMessageDialog(
                 null,
-                "Valor escolhido: "+valLinTab,
+                "Valor escolhido: " + valLinTab,
                 "Seleção na tabela",
                 1
         );
     }
-    public void listaTab(){
+
+    public void listaTab() {
         DefaultTableModel modelo = (DefaultTableModel) tabCar.getModel();
-        
+
         int posLin = 0;
         modelo.setRowCount(posLin);
-        
-        for(Carro car : gc.getbdCar() ){
+
+        for (Carro car : gc.getbdCar()) {
             modelo.insertRow(posLin, new Object[]{car.getMarca(), car.getModelo(), car.getAno(), car.getPlaca()});
             posLin++;
         }
     }
-    
-    public void excluiCarro(){
-      car = new Carro();
-      car.setPlaca(cxPlaca.getText());
-      car.setModelo(cxModelo.getText());
-      car.setMarca(cxMarca.getText());
-      car.setAno(Integer.parseInt(cxAno.getText()));
-      
-      car = gc.excluiCarro(car);
-       
-      if(car == null){
+
+    public void excluiCarro() {
+        car = new Carro();
+        car.setPlaca(cxPlaca.getText());
+        car = gc.consultaCarro(car);
+
+        car = gc.excluiCarro(car);
+
+        if (car == null) {
             JOptionPane.showMessageDialog(
                     null,
                     "Carro removido com sucesso!",
                     "Exclusão OK",
                     1
-                );
-      }
-      else{
-                  JOptionPane.showMessageDialog(
+            );
+        } else {
+            JOptionPane.showMessageDialog(
                     null,
                     "Não existe uma carsoa com este CPF",
                     "Erro de Excluasão",
                     0
-                );
-               
-      }
-      limpar();
+            );
+
+        }
+        limpar();
     }
-    
-    public void alteraCarro(){
-      car = new Carro();
-      car.setPlaca((cxPlaca.getText()));
-      
-      car = gc.atualizaCarro(car);
-       
-      if(car != null){
-          cxModelo.setText(car.getModelo());
-                JOptionPane.showMessageDialog(
+
+    public void alteraCarro() {
+        car = new Carro();
+        car.setPlaca((cxPlaca.getText()));
+        car = gc.atualizaCarro(car);
+
+        if (car != null) {
+            cxModelo.setText(car.getModelo());
+            JOptionPane.showMessageDialog(
                     null,
                     "Carro atualizado com sucesso!",
                     "Atualização OK",
                     1
-                );
-      }
-      else{
-                  JOptionPane.showMessageDialog(
+            );
+        } else {
+            JOptionPane.showMessageDialog(
                     null,
                     "Não existe um carro com essa placa",
                     "Erro de Alteração",
                     0
-                );
-               
-      }
-      limpar();
+            );
+
+        }
+        limpar();
     }
-    
-    public void consultaCarro(){
-      car = new Carro();
-      car.setPlaca(cxPlaca.getText());
-      
-      car = gc.consultaCarro(car);
-       
-      if(car != null){
-          cxModelo.setText(car.getModelo());
-          cxAno.setText(Integer.toString(car.getAno()));
-          cxMarca.setText(car.getMarca());
-      }
-      else{
-                  JOptionPane.showMessageDialog(
+
+    public void consultaCarro() {
+        car = new Carro();
+        car.setPlaca(cxPlaca.getText());
+
+        car = gc.consultaCarro(car);
+
+        if (car != null) {
+            cxModelo.setText(car.getModelo());
+            cxAno.setText(Integer.toString(car.getAno()));
+            cxMarca.setText(car.getMarca());
+        } else {
+            JOptionPane.showMessageDialog(
                     null,
                     "Carro consultado inexistente.",
                     "Erro de Consulta",
                     0
-                );
-                limpar();
-      }
-        
+            );
+            limpar();
+        }
+
     }
-    public void cadCar(){
+
+    public void cadCar() {
         car = new Carro();
-        
+
         car.setAno(Integer.parseInt(cxAno.getText()));
         car.setModelo(cxModelo.getText());
         car.setMarca(cxMarca.getText());
         car.setPlaca(cxPlaca.getText());
-        
-       car = gc.cadastraCarro(car);
-       
-       if(car != null){
-                JOptionPane.showMessageDialog(
+
+        car = gc.cadastraCarro(car);
+
+        if (car != null) {
+            JOptionPane.showMessageDialog(
                     null,
                     "Carro cadastrado com sucesso!",
                     "Cadastro Ok",
                     1
-                );
-                limpar();
-       }
-       else{
-                JOptionPane.showMessageDialog(
+            );
+            limpar();
+        } else {
+            JOptionPane.showMessageDialog(
                     null,
                     "Esse carro já foi cadastrado.",
                     "Erro de Cadastro",
                     0
-                );
-                limpar();
-       }
+            );
+            limpar();
+        }
     }
-    
-    public void limpar(){
+
+    public void limpar() {
         cxMarca.setText("");
         cxModelo.setText("");
         cxPlaca.setText("");
         cxAno.setText("");
     }
-    public void sair(){
+
+    public void sair() {
         int resp = JOptionPane.showConfirmDialog(
-                    null,
-                    "Encerrar programa?",
-                    "Saida",
-                    JOptionPane.YES_NO_OPTION
-                );
-        if(resp == 0){
+                null,
+                "Encerrar programa?",
+                "Saida",
+                JOptionPane.YES_NO_OPTION
+        );
+        if (resp == 0) {
             dispose();
-        }
-        else{
+        } else {
             limpar();
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -440,6 +446,7 @@ public class CadCar extends javax.swing.JFrame {
     private javax.swing.JTextField cxMarca;
     private javax.swing.JTextField cxModelo;
     private javax.swing.JTextField cxPlaca;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel rotAno;
     private javax.swing.JLabel rotMarca;
