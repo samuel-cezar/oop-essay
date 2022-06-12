@@ -20,16 +20,16 @@ public class GerCar {
 			return null;
 		}
 
-	}// fim cadastraCarro
+	}
 
 	public Carro consultaCarro(Carro car) {
 		for (int i = 0; i < bdCar.size(); i++) {
-			if (car.getPlaca() == bdCar.get(i).getPlaca()) {
+			if (this.car.getPlaca() == bdCar.get(i).getPlaca()) {
 				return bdCar.get(i);
 			}
 		}
 		return null;
-	}// fim consCar
+	}
 
 	public Carro excluiCarro(Carro car) {
 		car = consultaCarro(car);

@@ -21,20 +21,19 @@ public class CadCar extends javax.swing.JFrame {
         cxModelo = new javax.swing.JTextField();
         rotPlaca = new javax.swing.JLabel();
         cxPlaca = new javax.swing.JTextField();
-        cxAno = new javax.swing.JTextField();
         rotAno = new javax.swing.JLabel();
+        cxAno = new javax.swing.JTextField();
         btLimpar = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
-        btCadastroCarro = new javax.swing.JButton();
+        btCadastraCarro = new javax.swing.JButton();
         btConsultaCarro = new javax.swing.JButton();
+        btRemoveCarro = new javax.swing.JButton();
         btAlteraCarro = new javax.swing.JButton();
-        btExcluiCarro = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabCar = new javax.swing.JTable();
-        
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de veículos - Modelo Multimarcas");
+        setTitle("Cadastro de Pessoas");
 
         rotMarca.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         rotMarca.setText("Marca:");
@@ -51,6 +50,9 @@ public class CadCar extends javax.swing.JFrame {
         rotPlaca.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         rotPlaca.setText("Placa:");
 
+        rotAno.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rotAno.setText("Ano:");
+
         btLimpar.setText("Limpar");
         btLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,8 +67,8 @@ public class CadCar extends javax.swing.JFrame {
             }
         });
 
-        btCadastroCarro.setText("Cadastrar");
-        btCadastroCarro.addActionListener(new java.awt.event.ActionListener() {
+        btCadastraCarro.setText("Cadastrar");
+        btCadastraCarro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCadastroCarroActionPerformed(evt);
             }
@@ -79,6 +81,13 @@ public class CadCar extends javax.swing.JFrame {
             }
         });
 
+        btRemoveCarro.setText("Remover");
+        btRemoveCarro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluiCarroActionPerformed(evt);
+            }
+        });
+
         btAlteraCarro.setText("Alterar");
         btAlteraCarro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,33 +95,31 @@ public class CadCar extends javax.swing.JFrame {
             }
         });
 
-        btExcluiCarro.setText("Remover");
-        btExcluiCarro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btExcluiCarroActionPerformed(evt);
-            }
-        });
-
         tabCar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "MARCA", "MODELO", "PLACA", "ANO"
+                "Marca", "Modelo", "Ano", "Placa"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tabCar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabCarMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tabCar);
-
-        rotAno.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        rotAno.setText("Ano:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,11 +138,11 @@ public class CadCar extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(btCadastroCarro)
+                                .addComponent(btCadastraCarro)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btConsultaCarro)
                                 .addGap(18, 18, 18)
-                                .addComponent(btExcluiCarro)
+                                .addComponent(btRemoveCarro)
                                 .addGap(18, 18, 18)
                                 .addComponent(btAlteraCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -167,16 +174,17 @@ public class CadCar extends javax.swing.JFrame {
                     .addComponent(rotModelo)
                     .addComponent(cxModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rotPlaca)
-                    .addComponent(cxPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(rotAno)
-                        .addComponent(cxAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cxAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rotPlaca)
+                        .addComponent(cxPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btCadastroCarro)
-                    .addComponent(btExcluiCarro)
+                    .addComponent(btCadastraCarro)
+                    .addComponent(btRemoveCarro)
                     .addComponent(btConsultaCarro)
                     .addComponent(btAlteraCarro))
                 .addGap(29, 29, 29)
@@ -234,7 +242,7 @@ public class CadCar extends javax.swing.JFrame {
             valLinTab += tabCar.getModel().getValueAt(posLin,coluna).toString();
             
             if(coluna+1 < tabCar.getRowCount()){
-               valLinTab += " - ";
+               valLinTab += " ";
             }
             
         }
@@ -348,7 +356,7 @@ public class CadCar extends javax.swing.JFrame {
        if(car != null){
                 JOptionPane.showMessageDialog(
                     null,
-                    "Carro cadastrada com sucesso!",
+                    "Carro cadastrado com sucesso!",
                     "Cadastro Ok",
                     1
                 );
@@ -357,7 +365,7 @@ public class CadCar extends javax.swing.JFrame {
        else{
                 JOptionPane.showMessageDialog(
                     null,
-                    "Já existe uma carsoa com este CPF",
+                    "Esse carro já foi cadastrado.",
                     "Erro de Cadastro",
                     0
                 );
@@ -423,20 +431,20 @@ public class CadCar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAlteraCarro;
-    private javax.swing.JButton btCadastroCarro;
+    private javax.swing.JButton btCadastraCarro;
     private javax.swing.JButton btConsultaCarro;
-    private javax.swing.JButton btExcluiCarro;
     private javax.swing.JButton btLimpar;
+    private javax.swing.JButton btRemoveCarro;
     private javax.swing.JButton btSair;
+    private javax.swing.JTextField cxAno;
     private javax.swing.JTextField cxMarca;
     private javax.swing.JTextField cxModelo;
     private javax.swing.JTextField cxPlaca;
-    private javax.swing.JTextField cxAno;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel rotAno;
     private javax.swing.JLabel rotMarca;
     private javax.swing.JLabel rotModelo;
     private javax.swing.JLabel rotPlaca;
-    private javax.swing.JLabel rotAno;
     private javax.swing.JTable tabCar;
     // End of variables declaration//GEN-END:variables
 }
