@@ -2,11 +2,47 @@
 Samuel C. dos Santos - 1996789
 Prog. Orientada Objetos - Prof. José
 */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class CadCar extends javax.swing.JFrame {
-
+    private String url;
+    private String user;
+    private String pw;
+    public Connection conn;
+    
+    public List<Carro> conexao(){
+        url = "jdbc:postgresql://banco-oficina.cepytx6pbbp6.sa-east-1.rds.amazonaws.com:5432/postgres?user=postgres&password=oficina2";
+        
+        try {
+            conn = DriverManager.getConnection(url);
+            String query = "SELECT * from carros";
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            Carro cr;
+            while(rs.next()){
+                cr = new Carro(rs.getInt("ano"), rs.getString("modelo"), rs.getString("marca"), rs.getString("placa"));
+                bdCar.add(cr);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Caiu no catch da conexao()",
+                    "ERRO",
+                    1
+            );
+            e.printStackTrace();
+        }
+        return bdCar;
+    }
+    
+    private List<Carro> bdCar = conexao();
+    
     private Carro car = new Carro();
     private GerCar gc = new GerCar();
 
@@ -164,15 +200,11 @@ public class CadCar extends javax.swing.JFrame {
                                 .addComponent(rotPlaca, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(cxAno, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(cxAno, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(cxMarca)
                                 .addComponent(cxModelo)
                                 .addComponent(cxPlaca)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(0, 0, 0)
-                            .addComponent(jLabel1))))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -183,7 +215,7 @@ public class CadCar extends javax.swing.JFrame {
                     .addComponent(rotPlaca)
                     .addComponent(cxPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rotMarca)
                     .addComponent(cxMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -277,11 +309,12 @@ public class CadCar extends javax.swing.JFrame {
 
         int posLin = 0;
         modelo.setRowCount(posLin);
-
-        for (Carro car : gc.getbdCar()) {
+        
+        for (Carro car : bdCar) {
             modelo.insertRow(posLin, new Object[]{car.getMarca(), car.getModelo(), car.getAno(), car.getPlaca()});
             posLin++;
         }
+        
     }
 
     public void excluiCarro() {
