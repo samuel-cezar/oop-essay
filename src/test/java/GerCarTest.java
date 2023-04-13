@@ -42,6 +42,7 @@ public class GerCarTest {
         c1.setPlaca(placa);
         
         GerCar instance = new GerCar();
+        instance.cadastraCarro(c1);
         Carro result = instance.consultaCarro(c1);
         assertNotNull(result);
     }
@@ -76,7 +77,7 @@ public class GerCarTest {
         GerCar instance = new GerCar();
         instance.cadastraCarro(c3);
         Carro result = instance.atualizaCarro(c3);
-        assertNotNull(result);
+        assertFalse(result.getModelo().equals("Gol"));
     }
     
 }
