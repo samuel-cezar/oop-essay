@@ -42,11 +42,12 @@ public class CarroTest {
         System.out.println("setAno");
         int ano = 2000;
         int maximo = 2024;
-        int minimo = 1886;
         Carro instance = new Carro();
         instance.setAno(ano);
         assertTrue(maximo > instance.getAno());
-        assertTrue(minimo < instance.getAno());
+        
+        instance.setAno(2025);
+        assertTrue(maximo < instance.getAno());
     }
 
     @Test
@@ -57,6 +58,11 @@ public class CarroTest {
         String result = instance.getPlaca();
         
         assertTrue(result.length() == 7);
+        
+        instance.setPlaca("ABC12345");
+        String result2 = instance.getPlaca();
+        
+        assertTrue(result2.length() == 0);
     }
 
     @Test
@@ -67,5 +73,10 @@ public class CarroTest {
         instance.setPlaca(placa);
         String result = instance.getPlaca();
         assertTrue(result.length() == 7);
+        
+        instance.setPlaca("ABC12345");
+        String result2 = instance.getPlaca();
+        
+        assertTrue(result2.length() == 0);
     }
 }
