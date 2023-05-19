@@ -2,46 +2,11 @@
 Samuel C. dos Santos - 1996789
 Prog. Orientada Objetos - Prof. José
 */
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class CadCar extends javax.swing.JFrame {
-    private String url;
-    private String user;
-    private String pw;
-    public Connection conn;
-    
-    public List<Carro> conexao(){
-        url = "jdbc:postgresql://banco-oficina.cepytx6pbbp6.sa-east-1.rds.amazonaws.com:5432/postgres?user=postgres&password=oficina2";
-        
-        try {
-            conn = DriverManager.getConnection(url);
-            String query = "SELECT * from carros";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            Carro cr;
-            while(rs.next()){
-                cr = new Carro(rs.getInt("ano"), rs.getString("modelo"), rs.getString("marca"), rs.getString("placa"));
-                bdCar.add(cr);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Caiu no catch da conexao()",
-                    "ERRO",
-                    1
-            );
-            e.printStackTrace();
-        }
-        return bdCar;
-    }
-    
-    private List<Carro> bdCar = conexao();
     
     private Carro car = new Carro();
     private GerCar gc = new GerCar();
@@ -113,28 +78,32 @@ public class CadCar extends javax.swing.JFrame {
             }
         });
 
-        btCadastraCarro.setText("Cadastrar");
+        btCadastraCarro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.png"))); // NOI18N
+        btCadastraCarro.setToolTipText("Cadastrar");
         btCadastraCarro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCadastroCarroActionPerformed(evt);
             }
         });
 
-        btConsultaCarro.setText("Consultar");
+        btConsultaCarro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/list.png"))); // NOI18N
+        btConsultaCarro.setToolTipText("Consultar");
         btConsultaCarro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btConsultaCarroActionPerformed(evt);
             }
         });
 
-        btRemoveCarro.setText("Remover");
+        btRemoveCarro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/delete.png"))); // NOI18N
+        btRemoveCarro.setToolTipText("Remover");
         btRemoveCarro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btExcluiCarroActionPerformed(evt);
             }
         });
 
-        btAlteraCarro.setText("Alterar");
+        btAlteraCarro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit.png"))); // NOI18N
+        btAlteraCarro.setToolTipText("Alterar");
         btAlteraCarro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btAlteraCarroActionPerformed(evt);
@@ -185,14 +154,6 @@ public class CadCar extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(btCadastraCarro)
-                            .addGap(18, 18, 18)
-                            .addComponent(btConsultaCarro)
-                            .addGap(18, 18, 18)
-                            .addComponent(btRemoveCarro)
-                            .addGap(18, 18, 18)
-                            .addComponent(btAlteraCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(rotModelo)
                                 .addComponent(rotAno, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -204,8 +165,18 @@ public class CadCar extends javax.swing.JFrame {
                                 .addComponent(cxMarca)
                                 .addComponent(cxModelo)
                                 .addComponent(cxPlaca)))
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(btCadastraCarro)
+                                .addGap(39, 39, 39)
+                                .addComponent(btConsultaCarro)
+                                .addGap(36, 36, 36)
+                                .addComponent(btRemoveCarro)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btAlteraCarro))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,14 +198,16 @@ public class CadCar extends javax.swing.JFrame {
                     .addComponent(rotAno)
                     .addComponent(cxAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btCadastraCarro)
-                    .addComponent(btRemoveCarro)
-                    .addComponent(btConsultaCarro)
-                    .addComponent(btAlteraCarro))
-                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btConsultaCarro)
+                            .addComponent(btCadastraCarro)
+                            .addComponent(btRemoveCarro)))
+                    .addComponent(btAlteraCarro, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
