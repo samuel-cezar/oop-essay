@@ -50,9 +50,9 @@ public class Conexao {
     }
       
     public Connection conexao(){
-        url = "jdbc:postgresql://bd-oficina02.cnntbxtchadc.us-east-2.rds.amazonaws.com:5432/oficina_integracao_02";
+        url = "jdbc:postgresql://bdoficina02.cxsemodhyjwz.us-east-1.rds.amazonaws.com:5432/oficina_integracao_02";
         user = "oficina02";
-        pw = "#Oficina2313707";
+        pw = "oficina1234";
         
         try {
             conn = DriverManager.getConnection(url, user, pw);
