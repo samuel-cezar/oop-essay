@@ -11,7 +11,7 @@ package com.samuel.atividadepratica1;
 public class JanelaCliente extends javax.swing.JFrame {
 
     int indice = 0;
-    ControllerArquivoTextoCliente controler = new ControllerArquivoTextoCliente();
+    ControllerArquivoTextoCarro controler = new ControllerArquivoTextoCarro();
 
     /**
      * Creates new form JanelaCliente
@@ -30,11 +30,11 @@ public class JanelaCliente extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextFieldNome = new javax.swing.JTextField();
+        jTextFieldModelo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldzap = new javax.swing.JTextField();
+        jTextFieldPlaca = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldEmail = new javax.swing.JTextField();
+        jTextFieldAno = new javax.swing.JTextField();
         jButtonSalvar = new javax.swing.JButton();
         jButtonAbrir = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -42,11 +42,11 @@ public class JanelaCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Nome:");
+        jLabel1.setText("Modelo");
 
-        jLabel2.setText("Zap:");
+        jLabel2.setText("Placa");
 
-        jLabel3.setText("e-mail:");
+        jLabel3.setText("Ano");
 
         jButtonSalvar.setText("Salvar");
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -84,20 +84,20 @@ public class JanelaCliente extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextFieldNome)
-                    .addComponent(jTextFieldzap)
-                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
-                .addContainerGap(108, Short.MAX_VALUE))
+                    .addComponent(jTextFieldModelo, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                    .addComponent(jTextFieldPlaca)
+                    .addComponent(jTextFieldAno, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(105, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addComponent(jButtonAbrir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
@@ -112,21 +112,21 @@ public class JanelaCliente extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextFieldzap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAbrir)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addComponent(jButtonSalvar)
                 .addGap(25, 25, 25))
         );
@@ -137,17 +137,17 @@ public class JanelaCliente extends javax.swing.JFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         controler.setArquivo("salvar");
-        Cliente cli = new Cliente();
-        cli.setNome(jTextFieldNome.getText());
-        cli.setZap(jTextFieldzap.getText());
-        cli.setEmail(jTextFieldEmail.getText());
-        controler.getClientes().add(cli);
-        controler.escreverCliente(true);
+        Carro car = new Carro();
+        car.setModelo(jTextFieldModelo.getText());
+        car.setPlaca(jTextFieldPlaca.getText());
+        car.setAno(jTextFieldAno.getText());
+        controler.getCarros().add(car);
+        controler.escreverCarro(true);
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirActionPerformed
         controler.setArquivo("Abrir");
-        controler.lerCliente();
+        controler.lerCarro();
         indice = 0;
         Navega(indice);
     }//GEN-LAST:event_jButtonAbrirActionPerformed
@@ -162,10 +162,10 @@ public class JanelaCliente extends javax.swing.JFrame {
 
     
     public void Navega(int indice){
-        Cliente cli = controler.getClientes().get(indice);
-        jTextFieldNome.setText(cli.getNome());
-        jTextFieldzap.setText(cli.getZap());
-        jTextFieldEmail.setText(cli.getEmail());
+        Carro cli = controler.getCarros().get(indice);
+        jTextFieldModelo.setText(cli.getModelo());
+        jTextFieldPlaca.setText(cli.getPlaca());
+        jTextFieldAno.setText(cli.getAno());
     }
     /**
      * @param args the command line arguments
@@ -210,8 +210,8 @@ public class JanelaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextFieldEmail;
-    private javax.swing.JTextField jTextFieldNome;
-    private javax.swing.JTextField jTextFieldzap;
+    private javax.swing.JTextField jTextFieldAno;
+    private javax.swing.JTextField jTextFieldModelo;
+    private javax.swing.JTextField jTextFieldPlaca;
     // End of variables declaration//GEN-END:variables
 }
