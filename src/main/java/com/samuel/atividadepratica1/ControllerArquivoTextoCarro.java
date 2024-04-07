@@ -22,11 +22,12 @@ public class ControllerArquivoTextoCarro extends ControllerArquivoTexto {
             StringTokenizer linha = new StringTokenizer(conteudo, "--");
             while (linha.hasMoreTokens()) {
                 StringTokenizer registro = new StringTokenizer(linha.nextToken(), ";");
-                Carro cli = new Carro();
-                cli.setModelo(registro.nextToken());
-                cli.setPlaca(registro.nextToken());
-                cli.setAno(registro.nextToken());
-                getCarros().add(cli);
+                Carro car = new Carro();
+                car.setModelo(registro.nextToken());
+                car.setPlaca(registro.nextToken());
+                car.setAno(registro.nextToken());
+                car.setMarca(registro.nextToken());
+                getCarros().add(car);
             }
             return true;
         } else {
@@ -37,8 +38,8 @@ public class ControllerArquivoTextoCarro extends ControllerArquivoTexto {
     public boolean escreverCarro(boolean append) {
         boolean aux = false;
         for (int i = 0; i < carros.size(); i++) {
-            Carro cliente = carros.get(i);
-            String texto = cliente.getModelo() + ";" + cliente.getPlaca() + ";" + cliente.getAno() + "--";
+            Carro carro = carros.get(i);
+            String texto = carro.getModelo() + ";" + carro.getPlaca() + ";" + carro.getAno() +  ";" + carro.getMarca() + "--";
             setTexto(texto);
             if (i == 0) {
                 aux = (escrever(false));
