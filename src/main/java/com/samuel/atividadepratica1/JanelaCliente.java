@@ -11,16 +11,18 @@ import javax.swing.JOptionPane;
  * @author fabricio
  */
 public class JanelaCliente extends javax.swing.JFrame {
+
     private int indice = 0;
     ControllerArquivoTextoCarro controler = new ControllerArquivoTextoCarro();
 
-    public int getIndice(int Indice){
+    public int getIndice(int Indice) {
         return indice;
     }
-    
-    public void setIndice(int Indice){
+
+    public void setIndice(int Indice) {
         this.indice = Indice;
     }
+
     /**
      * Creates new form JanelaCliente
      */
@@ -174,8 +176,16 @@ public class JanelaCliente extends javax.swing.JFrame {
         car.setPlaca(jTextFieldPlaca.getText());
         car.setAno(jTextFieldAno.getText());
         car.setMarca(jTextFieldMarca.getText());
-        controler.getCarros().add(car);
-        controler.escreverCarro(true);
+        if (!(jTextFieldAno.getText() != null && jTextFieldAno.getText().matches("\\d{4}"))) {
+            JOptionPane.showMessageDialog(this, "O ano deve ser um número inteiro com 4 dígitos.", "Erro de Validacão", JOptionPane.ERROR_MESSAGE);
+        } else if (jTextFieldPlaca.getText().length() != 7) {
+            JOptionPane.showMessageDialog(this, "A placa deve conter 7 caracteres.", "Erro de Validacão", JOptionPane.ERROR_MESSAGE);
+        } else {
+            controler.getCarros().add(car);
+            controler.escreverCarro(true);
+            setIndice(0);
+            Navega(indice);
+        }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirActionPerformed
@@ -201,40 +211,39 @@ public class JanelaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldAnoActionPerformed
 
-    
-    public void Navega(int indice){
+    public void Navega(int indice) {
         int listSize = controler.getCarros().size();
-    // Check if there are any items available
-    if (controler.getCarros().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Nenhum carro encontrado.", "Lista vazia.", JOptionPane.INFORMATION_MESSAGE);
-        return; // Exit the method early
+        // Check if there are any items available
+        if (controler.getCarros().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum carro encontrado.", "Lista vazia.", JOptionPane.INFORMATION_MESSAGE);
+            return; // Exit the method early
+        }
+
+        // Check if the index is within bounds
+        if (indice >= 0 && indice < listSize) {
+            Carro carro = controler.getCarros().get(indice);
+            jTextFieldModelo.setText(carro.getModelo());
+            jTextFieldPlaca.setText(carro.getPlaca());
+            jTextFieldAno.setText(carro.getAno());
+            jTextFieldMarca.setText(carro.getMarca());
+        } else if (indice < 0) {
+            setIndice(0);
+            JOptionPane.showMessageDialog(this, "Você já está no começo da lista", "Navegação Impedida", JOptionPane.ERROR_MESSAGE);
+            Carro carro = controler.getCarros().get(0);
+            jTextFieldModelo.setText(carro.getModelo());
+            jTextFieldPlaca.setText(carro.getPlaca());
+            jTextFieldAno.setText(carro.getAno());
+            jTextFieldMarca.setText(carro.getMarca());
+        } else if (indice == listSize) {
+            setIndice(listSize - 1);
+            Carro carro = controler.getCarros().get((listSize - 1));
+            jTextFieldModelo.setText(carro.getModelo());
+            jTextFieldPlaca.setText(carro.getPlaca());
+            jTextFieldAno.setText(carro.getAno());
+            jTextFieldMarca.setText(carro.getMarca());
+            JOptionPane.showMessageDialog(this, "Você chegou ao fim da lista", "Fim da Lista", JOptionPane.ERROR_MESSAGE);
+        }
     }
-    
-    // Check if the index is within bounds
-    if (indice >= 0 && indice < listSize) {
-        Carro carro = controler.getCarros().get(indice);
-        jTextFieldModelo.setText(carro.getModelo());
-        jTextFieldPlaca.setText(carro.getPlaca());
-        jTextFieldAno.setText(carro.getAno());
-        jTextFieldMarca.setText(carro.getMarca());
-    } else if (indice < 0){
-        setIndice(0);
-        JOptionPane.showMessageDialog(this, "Você já está no começo da lista", "Navegação Impedida", JOptionPane.ERROR_MESSAGE);
-        Carro carro = controler.getCarros().get(0);
-        jTextFieldModelo.setText(carro.getModelo());
-        jTextFieldPlaca.setText(carro.getPlaca());
-        jTextFieldAno.setText(carro.getAno());
-        jTextFieldMarca.setText(carro.getMarca());
-    } else if (indice == listSize) {
-        setIndice(listSize - 1);
-        Carro carro = controler.getCarros().get((listSize - 1));
-        jTextFieldModelo.setText(carro.getModelo());
-        jTextFieldPlaca.setText(carro.getPlaca());
-        jTextFieldAno.setText(carro.getAno());
-        jTextFieldMarca.setText(carro.getMarca());
-        JOptionPane.showMessageDialog(this, "Você chegou ao fim da lista", "Fim da Lista", JOptionPane.ERROR_MESSAGE);
-    }
-}
 
     /**
      * @param args the command line arguments
