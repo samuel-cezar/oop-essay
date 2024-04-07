@@ -4,15 +4,24 @@
  */
 package com.samuel.atividadepratica1;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author fabricio
  */
 public class JanelaCliente extends javax.swing.JFrame {
 
-    int indice = 0;
+    private int indice = 0;
     ControllerArquivoTextoCarro controler = new ControllerArquivoTextoCarro();
 
+    public int getIndice(int Indice){
+        return indice;
+    }
+    
+    public void setIndice(int Indice){
+        this.indice = Indice;
+    }
     /**
      * Creates new form JanelaCliente
      */
@@ -70,14 +79,14 @@ public class JanelaCliente extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Proximo");
+        jButton1.setText("->");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Anterior");
+        jButton2.setText("<-");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -172,7 +181,7 @@ public class JanelaCliente extends javax.swing.JFrame {
     private void jButtonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirActionPerformed
         controler.setArquivo("Abrir");
         controler.lerCarro();
-        indice = 0;
+        setIndice(0);
         Navega(indice);
     }//GEN-LAST:event_jButtonAbrirActionPerformed
 
@@ -194,12 +203,39 @@ public class JanelaCliente extends javax.swing.JFrame {
 
     
     public void Navega(int indice){
+        int listSize = controler.getCarros().size();
+    // Check if there are any items available
+    if (controler.getCarros().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Nenhum carro encontrado.", "Lista vazia.", JOptionPane.INFORMATION_MESSAGE);
+        return; // Exit the method early
+    }
+    
+    // Check if the index is within bounds
+    if (indice >= 0 && indice < listSize) {
         Carro carro = controler.getCarros().get(indice);
         jTextFieldModelo.setText(carro.getModelo());
         jTextFieldPlaca.setText(carro.getPlaca());
         jTextFieldAno.setText(carro.getAno());
         jTextFieldMarca.setText(carro.getMarca());
+    } else if (indice < 0){
+        setIndice(0);
+        JOptionPane.showMessageDialog(this, "Você já está no começo da lista", "Navegação Impedida", JOptionPane.ERROR_MESSAGE);
+        Carro carro = controler.getCarros().get(0);
+        jTextFieldModelo.setText(carro.getModelo());
+        jTextFieldPlaca.setText(carro.getPlaca());
+        jTextFieldAno.setText(carro.getAno());
+        jTextFieldMarca.setText(carro.getMarca());
+    } else if (indice == listSize) {
+        setIndice(listSize - 1);
+        Carro carro = controler.getCarros().get((listSize - 1));
+        jTextFieldModelo.setText(carro.getModelo());
+        jTextFieldPlaca.setText(carro.getPlaca());
+        jTextFieldAno.setText(carro.getAno());
+        jTextFieldMarca.setText(carro.getMarca());
+        JOptionPane.showMessageDialog(this, "Você chegou ao fim da lista", "Fim da Lista", JOptionPane.ERROR_MESSAGE);
     }
+}
+
     /**
      * @param args the command line arguments
      */
